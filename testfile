@@ -57,7 +57,16 @@ http {
 
     server {
         listen 80;
-        
+
+
+### docker test puertos>
+
+docker ps --format "table {{.Names}}\t{{.Ports}}"
+NAMES                       PORTS
+eu-localstack-nginx-1       0.0.0.0:80->80/tcp, [::]:80->80/tcp
+eu-localstack-green-app-1   3000/tcp
+eu-localstack-blue-app-1    3000/tcp
+localstack                  0.0.0.0:4510-4559->4510-4559/tcp, [::]:4510-4559->4510-4559/tcp, 0.0.0.0:4566->4566/tcp, [::]:4566->4566/tcp
         # Configuración general para Next.js
         location / {
             proxy_pass http://backend;
