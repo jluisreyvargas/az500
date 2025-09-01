@@ -10,3 +10,32 @@ server {
         proxy_pass http://dashboard;
     }
 }
+
+#### Docker Compose:
+
+environment:
+      - ACTIVE_APP=${ACTIVE_APP:-blue-app} # valor por defecto Blue
+
+### Script bash para cambiar:
+
+#!/bin/bash
+set -e
+
+if [ -z "$1" ]; then
+  echo "Uso: $0 [blue|green]"
+  exit 1
+fi
+
+if [ "$1" = "blue" ]; then
+  ACTIVE_APP="blue-app"
+elif [ "$1" = "green" ]; then
+  ACTIVE_APP="green-app"
+else
+  echo "Error: opción inválida. Usa 'blue' o 'green'."
+  exit 1
+fi
+
+echo ">>> Cambiando a $ACTIVE_APP ..."
+ACTIVE_APP=$ACTIVE_APP docker compose up -d nginx
+
+echo ">>> Nginx ahora enruta hacia $ACTIVE_APP ✅"
