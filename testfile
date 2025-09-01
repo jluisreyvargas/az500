@@ -1,0 +1,12 @@
+upstream dashboard {
+    # Se resolverá en runtime con la variable $ACTIVE_APP
+    server ${ACTIVE_APP}:3000;
+}
+
+server {
+    listen 80;
+
+    location / {
+        proxy_pass http://dashboard;
+    }
+}
